@@ -143,7 +143,6 @@
     <ClCompile Include="WinControls\Label.cpp" />
     <ClCompile Include="WinControls\ListBox.cpp" />
     <ClCompile Include="WinControls\Menu.cpp" />
-    <ClCompile Include="WinControls\OtherClasses.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FormEvents.h" />
@@ -156,7 +155,6 @@
     <ClInclude Include="WinControls\Label.h" />
     <ClInclude Include="WinControls\ListBox.h" />
     <ClInclude Include="WinControls\Menu.h" />
-    <ClInclude Include="WinControls\OtherClasses.h" />
     <ClInclude Include="WinControls\WinUI.h" />
   </ItemGroup>
   <ItemGroup>
