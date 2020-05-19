@@ -1,0 +1,10 @@
+#pragma once
+#include <Windows.h>
+#include "Form.h"
+#include "Button.h"
+#include "Menu.h"
+#include "CrossRete.h"
+#include "Control.h"
+#include "Label.h"
+#include "Edit.h"
+#include "ListBox.h"
