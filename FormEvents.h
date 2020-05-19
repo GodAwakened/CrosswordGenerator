@@ -160,7 +160,13 @@ void BtnNew_OnClick(Button* sender)
 	Rete->Clear();
 
 	MainForm.Hide();
-	HWND hWnd = CreateDialog(reinterpret_cast<HINSTANCE>(GetWindowLongPtrA(MainForm.GetHwnd(), GWLP_HINSTANCE)), MAKEINTRESOURCE(101), MainForm.GetHwnd(), (DLGPROC)DlgProc);
+#ifdef _WIN64
+	LONG_PTR pInst = GetWindowLongPtrA(MainForm.GetHwnd(), GWLP_HINSTANCE);
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(pInst);
+#else
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(GetWindowLongPtrA(MainForm.GetHwnd(), GWLP_HINSTANCE));
+#endif
+	HWND hWnd = CreateDialog(hInst, MAKEINTRESOURCE(101), MainForm.GetHwnd(), (DLGPROC)DlgProc);
 	ShowWindow(hWnd, SW_SHOW);
 	isDlgAccept = false;
 
