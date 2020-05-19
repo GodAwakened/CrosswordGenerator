@@ -71,7 +71,13 @@ int Label::GenerateIDM()
 void Label::CreateLabel(HWND hParent)
 {
 	IDM = GenerateIDM();
-	Handle = CreateWindow("STATIC", Text, WS_CHILD | WS_VISIBLE, x, y, Width, Height, hParent, (HMENU)IDM, (HINSTANCE)GetWindowLongPtr(hParent, GWLP_HINSTANCE), NULL);
+#ifdef _WIN64
+	LONG_PTR pInst = GetWindowLongPtr(hParent, GWLP_HINSTANCE);
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(pInst);
+#else
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(GetWindowLongPtr(hParent, GWLP_HINSTANCE));
+#endif
+	Handle = CreateWindow("STATIC", Text, WS_CHILD | WS_VISIBLE, x, y, Width, Height, hParent, (HMENU)IDM, hInst, NULL);
 	ShowWindow(Handle, SW_SHOW);
 }
 

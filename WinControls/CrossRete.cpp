@@ -4,7 +4,12 @@ CrossRete* CrossRete::Instance = NULL;
 
 LRESULT CALLBACK CrossRete::ReteProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	CrossRete* curRete = reinterpret_cast<CrossRete*>(GetWindowLong(hWnd, GWL_USERDATA));
+#ifdef _WIN64
+	LONG_PTR pCurRete = GetWindowLongPtr(hWnd, GWLP_USERDATA);
+	CrossRete* curRete = reinterpret_cast<CrossRete*>(pCurRete);
+#else
+	CrossRete* curRete = reinterpret_cast<CrossRete*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+#endif
 
 	if (message == WM_PAINT)
 	{
@@ -402,9 +407,15 @@ CrossRete::CrossRete(HWND hParent)
 	curState = STATES::NORMAL;
 
 	Rete_IDM = 7777777;
-	Handle = CreateWindow("STATIC", "", WS_CHILD | WS_BORDER | WS_VISIBLE, 5, 5, 20 * matrixSize.cx, 20 * matrixSize.cy, hParent, reinterpret_cast<HMENU>(Rete_IDM), reinterpret_cast<HINSTANCE>(GetWindowLong(hParent, GWL_HINSTANCE)), NULL);
+#ifdef _WIN64
+	LONG_PTR pInst = GetWindowLongPtr(hParent, GWLP_HINSTANCE);
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(pInst);
+#else
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(GetWindowLongPtr(hParent, GWLP_HINSTANCE));
+#endif
+	Handle = CreateWindow("STATIC", "", WS_CHILD | WS_BORDER | WS_VISIBLE, 5, 5, 20 * matrixSize.cx, 20 * matrixSize.cy, hParent, reinterpret_cast<HMENU>(Rete_IDM), hInst, NULL);
 	SetWindowLongPtr(Handle, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(ReteProc));
-	SetWindowLongPtr(Handle, GWL_USERDATA, reinterpret_cast<LONG>(this));
+	SetWindowLongPtr(Handle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 	ShowWindow(Handle, SW_SHOW);
 }
 

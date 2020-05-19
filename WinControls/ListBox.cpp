@@ -96,8 +96,13 @@ ListBox::~ListBox()
 
 void ListBox::CreateControl(HWND hParent)
 {
-	Handle = CreateWindow("listbox", "", WS_CHILD | WS_VISIBLE | LBS_STANDARD, x, y, Width, Height, hParent, reinterpret_cast<HMENU>(GenerateIDM()),
-		reinterpret_cast<HINSTANCE>(GetWindowLongPtr(hParent, GWL_HINSTANCE)), NULL);
+#ifdef _WIN64
+	LONG_PTR pInst = GetWindowLongPtr(hParent, GWLP_HINSTANCE);
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(pInst);
+#else
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(GetWindowLongPtr(hParent, GWLP_HINSTANCE));
+#endif
+	Handle = CreateWindow("listbox", "", WS_CHILD | WS_VISIBLE | LBS_STANDARD, x, y, Width, Height, hParent, reinterpret_cast<HMENU>(GenerateIDM()), hInst, NULL);
 
 	ShowWindow(Handle, SW_SHOW);
 }

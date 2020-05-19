@@ -70,7 +70,13 @@ void Edit::CreateEdit(HWND hParent)
 {
 	MultiLine = false;
 	IDM = GenerateIDM();
-	Handle = CreateWindow("EDIT", "", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_LEFT, x, y, Width, Height, hParent, reinterpret_cast<HMENU>(IDM), reinterpret_cast<HINSTANCE>(GetWindowLongPtr(hParent, GWLP_HINSTANCE)), NULL);
+#ifdef _WIN64
+	LONG_PTR pInst = GetWindowLongPtr(hParent, GWLP_HINSTANCE);
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(pInst);
+#else
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(GetWindowLongPtr(hParent, GWLP_HINSTANCE));
+#endif
+	Handle = CreateWindow("EDIT", "", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_LEFT, x, y, Width, Height, hParent, reinterpret_cast<HMENU>(IDM), hInst, NULL);
 	ShowWindow(Handle, SW_HIDE);
 }
 

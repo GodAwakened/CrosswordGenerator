@@ -98,8 +98,13 @@ int Button::GenerateIDM()
 void Button::CreateButtonWindow(HWND hParent)
 {
 	GenerateIDM();
-
-	Handle = CreateWindow("BUTTON", Text, WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, x, y, Width, Height, hParent, (HMENU)IDM, (HINSTANCE)GetWindowLongPtr(hParent, GWLP_HINSTANCE), NULL);
+#ifdef _WIN64
+	LONG_PTR pInst = GetWindowLongPtr(hParent, GWLP_HINSTANCE);
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(pInst);
+#else
+	HINSTANCE hInst = reinterpret_cast<HINSTANCE>(GetWindowLongPtr(hParent, GWLP_HINSTANCE));
+#endif
+	Handle = CreateWindow("BUTTON", Text, WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON, x, y, Width, Height, hParent, (HMENU)IDM, hInst, NULL);
 	ShowWindow(Handle, SW_SHOW);
 }
 
