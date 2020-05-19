@@ -8,6 +8,17 @@
 
 //#define USING_LAMBDA_IN_LIST
 
+extern Form MainForm;
+extern CrossRete* Rete;
+extern HWND hStartDialog;
+extern bool isDlgAccept;
+
+extern Button* btnNew, * btnSave, * btnClear;
+extern Label* lbl;
+extern Edit* editWord;
+extern Button* btnAccept;
+extern ListBox* wordsList;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)

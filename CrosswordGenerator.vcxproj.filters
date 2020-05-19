@@ -48,6 +48,9 @@
     <ClCompile Include="WinControls\ListBox.cpp">
       <Filter>WinControls</Filter>
     </ClCompile>
+    <ClCompile Include="FormEvents.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinControls\Form.h">

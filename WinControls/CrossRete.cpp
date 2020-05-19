@@ -305,6 +305,8 @@ bool CrossRete::SetWord(LPCSTR word)
 	endPoint = { 0, 0 };
 	SendMessage(Handle, WM_PAINT, 0, 0);
 	InvalidateRect(Handle, NULL, FALSE);
+
+	return true;
 }
 
 int CrossRete::GetWordSize()
@@ -382,6 +384,8 @@ bool CrossRete::GetMask(char* mask)
 		else
 			return false;
 	}
+
+	return true;
 }
 
 CrossRete* CrossRete::CreateInstance(HWND hParent)
